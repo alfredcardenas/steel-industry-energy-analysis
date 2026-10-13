@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Steel Industry Energy Dashboard</title>
+  <meta name="description" content="Web dashboard summarising one year (2018) of 15-minute electricity data from a steel manufacturing facility. Built with HTML, CSS and JavaScript.">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <main class="dashboard">
+
+    <header class="header">
+      <div>
+        <h1>STEEL INDUSTRY ENERGY</h1>
+        <p class="subtitle">Consumption &amp; Operational Performance | 35,040 observations</p>
+      </div>
+      <nav class="tabs" role="tablist" aria-label="Dashboard views">
+        <button class="tab" role="tab" data-view="overview" aria-selected="true">Executive Overview</button>
+        <button class="tab" role="tab" data-view="detail" aria-selected="false">Detailed Analysis</button>
+      </nav>
+    </header>
+
+    <!-- ===================== VIEW 1: EXECUTIVE OVERVIEW ===================== -->
+    <section id="view-overview" class="view" role="tabpanel" aria-label="Executive Overview">
+
+      <div class="kpi-row">
+        <article class="card kpi">
+          <p class="kpi-value"><span id="kpi-avg"></span><span class="kpi-unit">kWh</span></p>
+          <p class="kpi-label">Avg. Energy</p>
+        </article>
+        <article class="card kpi">
+          <p class="kpi-value"><span id="kpi-peak-avg"></span><span class="kpi-unit">kWh</span></p>
+          <p class="kpi-label">Peak Hourly Avg.</p>
+        </article>
+        <article class="card kpi">
+          <p class="kpi-value"><span id="kpi-peak-hour"></span><span class="kpi-unit">AM</span></p>
+          <p class="kpi-label">Peak Hour</p>
+        </article>
+        <article class="card kpi">
+          <p class="kpi-value"><span id="kpi-ratio"></span></p>
+          <p class="kpi-label">Weekday / Weekend</p>
+        </article>
+      </div>
+
+      <div class="row row-primary">
+        <article class="card chart-card">
+          <h2>Hourly Energy Consumption</h2>
+          <p class="card-note">Avg. kWh per 15-min interval, by hour of day</p>
+          <div class="chart chart-hourly" id="chart-hourly"></div>
+        </article>
+        <article class="card chart-card">
+          <h2>Energy by Load Type</h2>
+          <p class="card-note">Avg. kWh per 15-min interval</p>
+          <div class="hbars" id="chart-load"></div>
+        </article>
+      </div>
+
+      <div class="row row-secondary">
+        <article class="card chart-card">
+          <h2>Monthly Consumption</h2>
+          <p class="card-note">Total kWh per month</p>
+          <div class="chart chart-monthly" id="chart-monthly"></div>
+        </article>
+        <article class="card chart-card">
+          <h2>Weekday vs Weekend</h2>
+          <p class="card-note">Avg. kWh per 15-min interval</p>
+          <div class="hbars" id="chart-week"></div>
+          <p class="callout" id="week-callout"></p>
+        </article>
+      </div>
+
+      <article class="card insight">
+        <h2 class="eyebrow">KEY INSIGHT</h2>
+        <p>Energy use peaks around 9 AM and is substantially higher during maximum-load periods and weekdays.</p>
+      </article>
+    </section>
+
+    <!-- ===================== VIEW 2: DETAILED ANALYSIS ===================== -->
+    <section id="view-detail" class="view" role="tabpanel" aria-label="Energy Relationships — Detailed Analysis" hidden>
+
+      <h2 class="view-title">Energy Relationships — Detailed Analysis</h2>
+
+      <div class="kpi-row kpi-row-3">
+        <article class="card kpi">
+          <p class="kpi-value"><span id="r-kvarh"></span></p>
+          <p class="kpi-label">r · Usage vs Lagging Reactive Power</p>
+          <p class="kpi-sub">R² = <span id="r2-kvarh"></span></p>
+        </article>
+        <article class="card kpi">
+          <p class="kpi-value"><span id="r-co2"></span></p>
+          <p class="kpi-label">r · Usage vs CO₂</p>
+          <p class="kpi-sub">R² = <span id="r2-co2"></span></p>
+        </article>
+        <article class="card kpi">
+          <p class="kpi-value"><span id="r-pf"></span></p>
+          <p class="kpi-label">r · Usage vs Lagging Power Factor</p>
+          <p class="kpi-sub">R² = <span id="r2-pf"></span></p>
+        </article>
+      </div>
+
+      <div class="row row-secondary">
+        <article class="card chart-card">
+          <h2>Energy Consumption vs Reactive Power</h2>
+          <p class="card-note">Averages per 15-min interval, one point per load type</p>
+          <div class="chart chart-scatter" id="chart-kvarh"></div>
+        </article>
+        <article class="card chart-card">
+          <h2>Energy Consumption vs CO₂ Emissions</h2>
+          <p class="card-note">Averages per 15-min interval, one point per load type</p>
+          <div class="chart chart-scatter" id="chart-co2"></div>
+        </article>
+      </div>
+
+      <article class="card chart-card">
+        <h2>Frequency vs Energy Impact by Load Type</h2>
+        <p class="card-note">Share of 15-min intervals compared with share of total kWh</p>
+        <div class="share" id="chart-share"></div>
+      </article>
+
+      <article class="card insight">
+        <h2 class="eyebrow">HOW TO READ THIS VIEW</h2>
+        <p>r is the Pearson correlation computed with <code>CORR()</code> across all 35,040 intervals; R² (= r²) is the share of variance a linear fit explains. The two charts plot load-type averages, not individual intervals. Linear fits on the same intervals as the Tableau scatter plots give R² of 0.70–0.89 for reactive power (one line per load type, as in Tableau) and 0.98 for CO₂ (one line for all intervals). These are associations, not causes: reactive power and CO₂ move closely with consumption, while power factor is only moderately related.</p>
+      </article>
+    </section>
+
+    <footer class="footer">
+      Web dashboard (HTML · CSS · JavaScript) — not a Tableau export. Static values from the complete 2018 dataset; no filters applied.
+      Data: Sathishkumar V E, Changsun Shin, Yongyun Cho, <a href="https://doi.org/10.24432/C52G8C">UCI Machine Learning Repository</a> (CC BY 4.0).
+    </footer>
+  </main>
+
+  <div class="tooltip" id="tooltip" role="status" aria-live="polite"></div>
+
+  <script src="data/data.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>

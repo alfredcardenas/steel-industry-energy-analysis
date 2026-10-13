@@ -1,0 +1,259 @@
+/* Steel Industry Energy — web dashboard styles */
+
+:root {
+  --bg: #F5F6F8;
+  --card: #FFFFFF;
+  --blue: #3478A5;
+  --blue-2: #7FA7C5;
+  --blue-3: #C7D9E7;     /* light tint, used only for the third load-type segment */
+  --grid: #ECEEF1;
+  --text: #202124;
+  --text-2: #62676D;
+  --border: #E0E3E7;
+
+  --gap: 16px;
+  --radius: 8px;
+  --font: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font);
+  -webkit-font-smoothing: antialiased;
+}
+
+.dashboard {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 28px 24px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap);
+}
+
+/* ---------- Header ---------- */
+.header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+  padding-bottom: 4px;
+}
+h1 {
+  margin: 0;
+  font-size: 24px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+}
+.subtitle {
+  margin: 6px 0 0;
+  font-size: 14px;
+  color: var(--text-2);
+}
+
+.tabs {
+  display: inline-flex;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 3px;
+}
+.tab {
+  font: inherit;
+  font-size: 13px;
+  color: var(--text-2);
+  background: transparent;
+  border: 0;
+  border-radius: 4px;
+  padding: 6px 12px;
+  cursor: pointer;
+}
+.tab[aria-selected="true"] {
+  background: var(--blue);
+  color: #fff;
+}
+.tab:focus-visible { outline: 2px solid var(--blue); outline-offset: 2px; }
+
+.view { display: flex; flex-direction: column; gap: var(--gap); }
+.view[hidden] { display: none; }
+.view-title {
+  margin: 0;
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--text-2);
+}
+
+/* ---------- Cards ---------- */
+.card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 18px 20px;
+  min-width: 0;
+}
+.card h2 {
+  margin: 0;
+  font-size: 15px;
+  font-weight: 600;
+}
+.card-note {
+  margin: 3px 0 0;
+  font-size: 12px;
+  color: var(--text-2);
+}
+
+/* ---------- KPIs ---------- */
+.kpi-row {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--gap);
+}
+.kpi-row-3 { grid-template-columns: repeat(3, 1fr); }
+.kpi { text-align: center; padding: 18px 12px 16px; }
+.kpi p { margin: 0; }
+.kpi-value {
+  font-size: 30px;
+  font-weight: 600;
+  line-height: 1.1;
+  font-variant-numeric: tabular-nums;
+}
+.kpi-unit {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text-2);
+  margin-left: 4px;
+}
+.kpi-label {
+  margin-top: 6px !important;
+  font-size: 12px;
+  color: var(--text-2);
+}
+
+.kpi-sub {
+  margin-top: 3px !important;
+  font-size: 11px;
+  color: var(--text-2);
+  font-variant-numeric: tabular-nums;
+}
+
+/* ---------- Rows ---------- */
+.row { display: grid; gap: var(--gap); }
+.row-primary   { grid-template-columns: 3fr 2fr; }   /* 60 / 40 */
+.row-secondary { grid-template-columns: 1fr 1fr; }
+
+.chart-card { display: flex; flex-direction: column; }
+.chart { position: relative; width: 100%; margin-top: 8px; }
+.chart-hourly  { height: 300px; }
+.chart-monthly { height: 230px; }
+.chart-scatter { height: 260px; }
+.chart svg { display: block; overflow: visible; }
+
+/* SVG text */
+.axis-label { font-size: 11px; fill: var(--text-2); font-variant-numeric: tabular-nums; }
+.axis-title { font-size: 11px; fill: var(--text-2); }
+.annot      { font-size: 12px; font-weight: 600; fill: var(--text); font-variant-numeric: tabular-nums; }
+.annot-sub  { font-size: 11px; fill: var(--text-2); }
+
+/* ---------- Horizontal bars (HTML) ---------- */
+.hbars {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 22px;
+  margin-top: 14px;
+}
+.hbar-head {
+  display: flex;
+  justify-content: space-between;
+  font-size: 13px;
+  margin-bottom: 7px;
+}
+.hbar-name  { color: var(--text); }
+.hbar-value { font-weight: 600; font-variant-numeric: tabular-nums; }
+.hbar-value small { font-weight: 400; color: var(--text-2); margin-left: 3px; }
+.hbar-track { height: 14px; background: var(--grid); border-radius: 3px; overflow: hidden; }
+.hbar-fill  { height: 100%; background: var(--blue); border-radius: 3px; }
+
+.callout {
+  margin: 18px 0 0;
+  padding-top: 12px;
+  border-top: 1px solid var(--border);
+  font-size: 12px;
+  color: var(--text-2);
+}
+.callout strong { color: var(--text); }
+
+/* ---------- Share (stacked 100% bars) ---------- */
+.share { margin-top: 16px; display: flex; flex-direction: column; gap: 14px; }
+.share-row { display: grid; grid-template-columns: 130px 1fr; align-items: center; gap: 12px; }
+.share-label { font-size: 13px; color: var(--text-2); }
+.share-bar { display: flex; height: 30px; border-radius: 4px; overflow: hidden; }
+.share-seg {
+  display: flex; align-items: center; justify-content: center;
+  font-size: 12px; font-weight: 600; color: #fff;
+  font-variant-numeric: tabular-nums; white-space: nowrap; overflow: hidden;
+  border-right: 2px solid var(--card);
+}
+.share-seg:last-child { border-right: 0; }
+.share-seg.dark-text { color: var(--text); }
+.legend { display: flex; gap: 18px; flex-wrap: wrap; font-size: 12px; color: var(--text-2); margin-left: 142px; }
+.legend span { display: inline-flex; align-items: center; gap: 6px; }
+.legend i { width: 10px; height: 10px; border-radius: 2px; display: inline-block; }
+
+/* ---------- Insight ---------- */
+.insight { padding: 14px 20px; }
+.insight .eyebrow {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  color: var(--blue);
+}
+.insight p { margin: 5px 0 0; font-size: 14px; line-height: 1.5; }
+.insight code { font-size: 12.5px; background: var(--bg); padding: 1px 4px; border-radius: 3px; }
+
+/* ---------- Footer ---------- */
+.footer { font-size: 11px; color: var(--text-2); line-height: 1.5; padding: 0 2px; }
+.footer a { color: var(--blue); }
+
+/* ---------- Tooltip ---------- */
+.tooltip {
+  position: fixed;
+  pointer-events: none;
+  background: var(--text);
+  color: #fff;
+  font-size: 12px;
+  line-height: 1.4;
+  padding: 6px 9px;
+  border-radius: 4px;
+  opacity: 0;
+  transition: opacity .1s;
+  z-index: 10;
+  white-space: nowrap;
+}
+.tooltip.show { opacity: 1; }
+
+/* ---------- Responsive ---------- */
+@media (max-width: 900px) {
+  .row-primary, .row-secondary { grid-template-columns: 1fr; }
+  .kpi-row { grid-template-columns: repeat(2, 1fr); }
+  .kpi-row-3 { grid-template-columns: 1fr; }
+}
+@media (max-width: 520px) {
+  .dashboard { padding: 20px 16px; }
+  h1 { font-size: 20px; }
+  .kpi-value { font-size: 24px; }
+  .chart-hourly { height: 240px; }
+  .share-row { grid-template-columns: 1fr; gap: 6px; }
+  .legend { margin-left: 0; }
+}
+
+@media print {
+  body { background: #fff; }
+  .tabs, .tooltip { display: none; }
+}
