@@ -70,17 +70,11 @@ The cleaning approach was intentionally conservative: no rows were removed or al
 
 Consumption is consistently higher on weekdays, peaks during two daytime windows, and rises together with both load classification and lagging reactive power. These are descriptive associations from the available data, not evidence of cause and effect.
 
-## Dashboard
-
-![Steel Industry Energy Consumption Dashboard](images/steel_industry_energy_dashboard.png)
-
-The dashboard leads with three KPI cards (overall average, peak average hour, and highest-consuming load type), then breaks the findings down across six charts: monthly consumption, consumption by load type, hourly consumption, weekday vs. weekend consumption, and usage plotted against both reactive power and CO2 with trend lines. A Key Insights panel summarizes the three findings judged most relevant to energy management.
 
 ### Web dashboard
 
 A redesigned two-view version of the dashboard is published as a web page (HTML, CSS and JavaScript) with GitHub Pages:
-
-**[View the web dashboard →](https://USERNAME.github.io/steel-industry-energy-analysis/)**
+**[View the web dashboard →](https://alfredcardenas.github.io/steel-industry-energy-analysis/)**
 
 - **Executive Overview:** KPIs, hourly profile, load type, monthly totals, weekday vs. weekend.
 - **Detailed Analysis:** correlation (r) and R² for reactive power, CO2 and power factor, plus share of intervals vs. share of energy by load type.
